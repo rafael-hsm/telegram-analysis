@@ -6,9 +6,8 @@ from datetime import date, datetime
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
 from telethon.tl.functions.messages import (GetHistoryRequest)
-from telethon.tl.types import (
-    PeerChannel
-)
+from telethon.tl.functions.channels import GetChannelsRequest
+from telethon.tl.types import (PeerChannel)
 
 
 # some functions to parse json date
@@ -24,6 +23,7 @@ class DateTimeEncoder(json.JSONEncoder):
 
 
 # Reading Configs
+# Access this for get our api_id and api_hash https://my.telegram.org/
 config = configparser.ConfigParser()
 config.read("config.ini")
 
@@ -65,7 +65,7 @@ async def main(phone):
     limit = 100
     all_messages = []
     total_messages = 0
-    total_count_limit = 0
+    total_count_limit = 1001  # Last 1.000 menssages.
 
     while True:
         print("Current Offset ID is:", offset_id, "; Total Messages:", total_messages)

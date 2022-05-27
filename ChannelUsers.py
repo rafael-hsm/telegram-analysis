@@ -15,6 +15,7 @@ config = configparser.ConfigParser()
 config.read("config.ini")
 
 # Setting configuration values
+# Access this for get our api_id and api_hash https://my.telegram.org/
 api_id = config['Telegram']['api_id']
 api_hash = config['Telegram']['api_hash']
 
