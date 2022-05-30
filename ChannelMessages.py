@@ -2,6 +2,9 @@ import configparser
 import json
 import asyncio
 from datetime import date, datetime
+import pandas as pd
+from pandas import json_normalize
+import pprint
 
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
@@ -38,6 +41,7 @@ username = config['Telegram']['username']
 
 # Create the client and connect
 client = TelegramClient(username, api_id, api_hash)
+
 
 async def main(phone):
     await client.start()
@@ -89,8 +93,16 @@ async def main(phone):
         if total_count_limit != 0 and total_messages >= total_count_limit:
             break
 
+    df_1 = pd.DataFrame(all_messages, columns=['date', 'message'])
+    df_1.to_csv("channel_messages.csv")
+    print(df_1['message'].str.count("Hi", "hi").sum())
+
     with open('channel_messages.json', 'w') as outfile:
         json.dump(all_messages, outfile, cls=DateTimeEncoder)
 
+
 with client:
+    # https://t.me/coinsnipernet
     client.loop.run_until_complete(main(phone))
+
+

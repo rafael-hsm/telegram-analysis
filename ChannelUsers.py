@@ -6,9 +6,8 @@ from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
 from telethon.tl.functions.channels import GetParticipantsRequest
 from telethon.tl.types import ChannelParticipantsSearch
-from telethon.tl.types import (
-    PeerChannel
-)
+from telethon.tl.types import (PeerChannel)
+import pandas as pd
 
 # Reading Configs
 config = configparser.ConfigParser()
@@ -72,5 +71,7 @@ async def main(phone):
     with open('user_data.json', 'w') as outfile:
         json.dump(all_user_details, outfile)
 
+
 with client:
+    # https://t.me/coinsnipernet
     client.loop.run_until_complete(main(phone))
