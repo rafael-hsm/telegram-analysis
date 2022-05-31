@@ -26,6 +26,7 @@ username = config['Telegram']['username']
 # Create the client and connect
 client = TelegramClient(username, api_id, api_hash)
 
+
 async def main(phone):
     await client.start()
     print("Client Created")
@@ -53,10 +54,9 @@ async def main(phone):
     all_participants = []
 
     while True:
-        participants = await client(GetParticipantsRequest(
-            my_channel, ChannelParticipantsSearch(''), offset, limit,
-            hash=0
-        ))
+
+        participants = await client(
+            GetParticipantsRequest(my_channel, ChannelParticipantsSearch(''), offset, limit, hash=0, aggressive=True))
         if not participants.users:
             break
         all_participants.extend(participants.users)
@@ -71,7 +71,20 @@ async def main(phone):
     with open('user_data.json', 'w') as outfile:
         json.dump(all_user_details, outfile)
 
+    print(all_user_details)
+    print(len(all_user_details))
+    print(type(all_user_details))
+    df_1 = pd.DataFrame(all_user_details, columns=['id', 'first_name', 'phone', 'is_bot'])
+    print(df_1.info())
+    df_1.to_csv("user_channel.csv")
+    print(f"Total members: {df_1.shape[0]}")
+    total_bots = df_1['is_bot'].value_counts()
+    print(f"True = bots\n{total_bots}")
+
 
 with client:
     # https://t.me/coinsnipernet
+    # https://t.me/ENJINSTARTER
+    # https://t.me/apolloxchange
+    # https://t.me/RebaseAPY_chat
     client.loop.run_until_complete(main(phone))

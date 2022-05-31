@@ -95,7 +95,7 @@ async def main(phone):
 
     df_1 = pd.DataFrame(all_messages, columns=['date', 'message'])
     df_1.to_csv("channel_messages.csv")
-    print(df_1['message'].str.count("Hi", "hi").sum())
+    print(df_1['message'].str.count("Hi").sum())
 
     with open('channel_messages.json', 'w') as outfile:
         json.dump(all_messages, outfile, cls=DateTimeEncoder)
