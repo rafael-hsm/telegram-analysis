@@ -9,7 +9,7 @@ import pprint
 from telethon import TelegramClient
 from telethon.errors import SessionPasswordNeededError
 from telethon.tl.functions.messages import (GetHistoryRequest)
-from telethon.tl.functions.channels import GetChannelsRequest
+from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import (PeerChannel)
 
 
@@ -71,8 +71,14 @@ async def main(phone):
     total_messages = 0
     total_count_limit = 1001  # Last 1.000 menssages.
 
+    description = await client(GetFullChannelRequest(
+        channel=my_channel
+    ))
+    print(f"\nDescription\n{description.full_chat.about}\nEnd Description\n")
+
     while True:
         print("Current Offset ID is:", offset_id, "; Total Messages:", total_messages)
+
         history = await client(GetHistoryRequest(
             peer=my_channel,
             offset_id=offset_id,
