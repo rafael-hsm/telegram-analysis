@@ -4,10 +4,14 @@
 #-------------------------
 /nbproject/
 .idea/*
+.vscode
+.vs
+
 
 venv
 .ipynb_checkpoints
 .projectignore
+.venv
 *.session
 anaconda-project.yml
 *.json
